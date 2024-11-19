@@ -61,4 +61,7 @@ export interface LeaveRequest {
     status : string;
     reason: string;
     requestDate: string;
+    employeeName : string;
+    contactNo : string;
+    typeName : string;
 }

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { APIResponse, Employee } from '../model/Master';
+import { APIResponse, EarnedLeave, Employee, LeaveRequest } from '../model/Master';
 
 
 @Injectable({
@@ -10,8 +10,15 @@ import { APIResponse, Employee } from '../model/Master';
 export class MasterService {
 
   apiUrl: string = "https://projectapi.gerasim.in/api/EmployeeManagement/";
+  loggedUserData : any;
 
-  constructor(private http : HttpClient) { }
+  constructor(private http : HttpClient) {
+    const localData = localStorage.getItem("leaveUser");
+    if(localData) {
+      this.loggedUserData = JSON.parse(localData);
+    }
+   }
+
 
   getDepartment() : Observable<APIResponse>{
     return this.http.get<APIResponse>(this.apiUrl + "GetParentDepartment")
@@ -39,5 +46,33 @@ export class MasterService {
 
   deleteEmp(id : number) : Observable<Employee[]>{
     return this.http.delete<Employee[]>(this.apiUrl + "DeleteEmployee/" +id)
+  }
+
+  addEarnedLeave(emp : EarnedLeave)  : Observable<APIResponse> {
+    return this.http.post<APIResponse>(`${this.apiUrl}AddNewEarnedLeave`, emp)
+  }
+
+  getAllEarnedLeaves() : Observable<APIResponse>{
+    return this.http.get<APIResponse>(this.apiUrl + "GetAllEarnedLeaves")
+  }
+
+  getAllLeaveType() : Observable<APIResponse>{
+    return this.http.get<APIResponse>(this.apiUrl + "GetLeaveTypes")
+  }
+
+  newLeaveRequest(emp : LeaveRequest)  : Observable<APIResponse> {
+    return this.http.post<APIResponse>(`${this.apiUrl}CreateNewLeaveRequest`, emp)
+  }
+
+  getAllLeaveByEmpId(id : number)  : Observable<APIResponse> {
+    return this.http.get<APIResponse>(`${this.apiUrl}GetAllLeaveRequestByEmpId?id=`+ id)
+  }
+
+  getAllLeaveRequest()  : Observable<APIResponse> {
+    return this.http.get<APIResponse>(`${this.apiUrl}GetAllLeaveRequest`)
+  }
+
+  changeLeaveStatus(leaveId : number, status : string) : Observable<APIResponse>{
+    return this.http.get<APIResponse>(this.apiUrl + "ChangeLeaveStatus?leaveId="+leaveId+"&status="+status)
   }
 }
