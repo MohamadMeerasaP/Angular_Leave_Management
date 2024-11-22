@@ -75,4 +75,16 @@ export class MasterService {
   changeLeaveStatus(leaveId : number, status : string) : Observable<APIResponse>{
     return this.http.get<APIResponse>(this.apiUrl + "ChangeLeaveStatus?leaveId="+leaveId+"&status="+status)
   }
+
+  cancelLeaveById(id : number)  : Observable<APIResponse> {
+    return this.http.delete<APIResponse>(`${this.apiUrl}DeleteLeaveRequestId?leaveId=`+ id)
+  }
+
+  getHrValues()  : Observable<APIResponse> {
+    return this.http.get<APIResponse>(`${this.apiUrl}GetHRDashboard`)
+  }
+
+  getEmpValues(id : number)  : Observable<APIResponse> {
+    return this.http.get<APIResponse>(`${this.apiUrl}GetEmpployeeLeaveDashboard?id=`+id)
+  }
 }

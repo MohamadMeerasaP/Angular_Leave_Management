@@ -1,12 +1,13 @@
 <div class="container my-4">
     <h3>Dashboard</h3>
+    @if(masterSrv.loggedUserData.role == "Admin") {
       <div class="row">
         <!-- Total Employees Widget -->
         <div class="col-md-4">
           <div class="card text-white bg-primary mb-3">
             <div class="card-header">Total Employees</div>
             <div class="card-body"> 
-              <p class="card-text" id="totalEmployees">0</p>
+              <p class="card-text" id="totalEmployees">{{hrDashboardData.totalEmployee}}</p>
             </div>
           </div>
         </div>
@@ -16,7 +17,7 @@
           <div class="card text-white bg-success mb-3">
             <div class="card-header">Total Leave</div>
             <div class="card-body"> 
-              <p class="card-text" id="totalProjects">0</p>
+              <p class="card-text" id="totalProjects">{{hrDashboardData.totalLeaves}}</p>
             </div>
           </div>
         </div>
@@ -26,7 +27,7 @@
           <div class="card text-white bg-warning mb-3">
             <div class="card-header">New Leaves</div>
             <div class="card-body"> 
-              <p class="card-text" id="activeEmployees">0</p>
+              <p class="card-text" id="activeEmployees">{{hrDashboardData.totalNewLeaves}}</p>
             </div>
           </div>
         </div>
@@ -34,7 +35,7 @@
           <div class="card text-white bg-primary mb-3">
             <div class="card-header">Approved Leaves</div>
             <div class="card-body"> 
-              <p class="card-text" id="activeEmployees">0</p>
+              <p class="card-text" id="activeEmployees">{{hrDashboardData.totalApprovedLeaves}}</p>
             </div>
           </div>
         </div>
@@ -42,19 +43,49 @@
           <div class="card text-white bg-success mb-3">
             <div class="card-header">Canceled Leaves</div>
             <div class="card-body"> 
-              <p class="card-text" id="activeEmployees">0</p>
+              <p class="card-text" id="activeEmployees">{{hrDashboardData.totalCanceledLeave}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    } @else {
+      <div class="row">
+        <!-- Active Employees in Projects -->
+        <div class="col-md-4">
+          <div class="card text-white bg-warning mb-3">
+            <div class="card-header">Earned Leaves</div>
+            <div class="card-body"> 
+              <p class="card-text" id="activeEmployees">{{empDashboardData.earnedLeave}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card text-white bg-primary mb-3">
+            <div class="card-header">New Leaves</div>
+            <div class="card-body"> 
+              <p class="card-text" id="activeEmployees">{{empDashboardData.totalNewLeaves}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card text-white bg-success mb-3">
+            <div class="card-header">Approved Leaves</div>
+            <div class="card-body"> 
+              <p class="card-text" id="activeEmployees">{{empDashboardData.totalApprovedLeaves}}</p>
             </div>
           </div>
         </div>
         <div class="col-md-4">
           <div class="card text-white bg-secondary mb-3">
-            <div class="card-header">Earned Leaves</div>
+            <div class="card-header">Canceled Leaves</div>
             <div class="card-body"> 
-              <p class="card-text" id="activeEmployees">0</p>
+              <p class="card-text" id="activeEmployees">{{empDashboardData.totalCanceledLeave}}</p>
             </div>
           </div>
         </div>
       </div>
+    }
+
     
       <div class="row">
         <!-- Latest Projects -->

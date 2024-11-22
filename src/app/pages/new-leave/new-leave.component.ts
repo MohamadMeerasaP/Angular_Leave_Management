@@ -3,13 +3,13 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MasterService } from '../../services/master.service';
 import { APIResponse, Employee, LeaveRequest, LeaveType } from '../../model/Master';
 import { Observable } from 'rxjs';
-import { AsyncPipe, DatePipe } from '@angular/common';
+import { AsyncPipe, CommonModule, DatePipe } from '@angular/common';
 import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-new-leave',
   standalone: true,
-  imports: [ReactiveFormsModule,AsyncPipe, DatePipe],
+  imports: [ReactiveFormsModule,AsyncPipe, DatePipe, CommonModule],
   templateUrl: './new-leave.component.html',
   styleUrl: './new-leave.component.css'
 })
@@ -94,6 +94,13 @@ export class NewLeaveComponent implements OnInit {
 
   changeStatus(id: number) {
     this.masterSrv.changeLeaveStatus(id, 'Approved').subscribe((res:APIResponse)=> {
+      this.leaveTypeList.set(res.data);
+      this.getLeaveData();
+    })
+  }
+
+  cancelLeave(id: number) {
+    this.masterSrv.cancelLeaveById(id).subscribe((res:APIResponse)=> {
       this.leaveTypeList.set(res.data);
       this.getLeaveData();
     })

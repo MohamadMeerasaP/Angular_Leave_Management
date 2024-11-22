@@ -52,14 +52,29 @@
                   
                           <!-- Card Footer with Action Buttons -->
                           <div class="card-footer text-end">
-                            @if(masterSrv.loggedUserData.role == "Admin") {
-                              <button class="btn btn-success btn-sm me-2"(click)="changeStatus(item.leaveId)" >Approve</button>
-                            } @else {
-                              <button class="btn btn-primary btn-sm me-2" >Edit</button>
-                              <button class="btn btn-danger btn-sm" >Cancel</button>
-                            }
+                            <!-- Show Approve button only for Admin and when status is New -->
+                             <ng-container *ngIf="masterSrv.loggedUserData.role === 'Admin' && item.status === 'New'">
+                              <button 
+                                    class="btn btn-success btn-sm me-2" 
+                                    (click)="changeStatus(item.leaveId)">
+                              Approve
+                            </button>
+                            <button class="btn btn-danger btn-sm" (click)="cancelLeave(item.leaveId)">
+                              Cancel
+                            </button>
+                             </ng-container>
+
+                            <!-- Show Edit and Cancel buttons for non-Admin users -->
+                            <ng-container *ngIf="(masterSrv.loggedUserData.role === 'Employee')">
+                              <!-- <button class="btn btn-primary btn-sm me-2">
+                                Edit
+                              </button> -->
+                              <button class="btn btn-danger btn-sm" (click)="cancelLeave(item.leaveId)">
+                                Cancel
+                              </button>
+                            </ng-container>
                           </div>
-                        </div>
+                          </div>
                       </div>
   
                     }
