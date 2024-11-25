@@ -99,6 +99,13 @@ export class NewLeaveComponent implements OnInit {
     })
   }
 
+  rejectLeave(id: number) {
+    this.masterSrv.changeLeaveStatus(id, 'Canceled').subscribe((res:APIResponse)=> {
+      this.leaveTypeList.set(res.data);
+      this.getLeaveData();
+    })
+  }
+
   cancelLeave(id: number) {
     this.masterSrv.cancelLeaveById(id).subscribe((res:APIResponse)=> {
       this.leaveTypeList.set(res.data);
